@@ -197,14 +197,21 @@ Role.create(movie_id: the_dark_knight_rises.id, actor_id: tom_hardy.id, characte
 Role.create(movie_id: the_dark_knight_rises.id, actor_id: joseph_gordon_levitt.id, character_name: "John Blake")
 Role.create(movie_id: the_dark_knight_rises.id, actor_id: anne_hathaway.id, character_name: "Selina Kyle")
 
+
 # Prints a header for the movies output
 puts "Movies"
 puts "======"
 puts ""
 
 # Query the movies data and loop through the results to display the movies output.
-SELECT
 
+movies = Movie.all
+
+
+for mov in movies
+        studio = Studio.find_by(id: mov.studio_id)
+        puts "#{mov.title} #{mov.year_released} #{mov.rated} #{studio["name"]}" 
+end
 
 # Prints a header for the cast output
 puts ""
@@ -213,4 +220,13 @@ puts "========"
 puts ""
 
 # Query the cast data and loop through the results to display the cast output for each movie.
-# TODO!
+
+
+
+roles = Role.all
+
+for rol in roles
+    movies = Movie.find_by(id: rol.movie_id)
+    actors = Actor.find_by(id: rol.actor_id)
+    puts "#{movies.title}   #{actors.name}   #{rol.character_name}" 
+end
